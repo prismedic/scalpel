@@ -1,0 +1,29 @@
+basePath: /v1
+definitions:
+  infofx.HealthResponse:
+    properties:
+      status:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: An example HTTP API to demonstrate the usage of the Arsenal framework.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Example HTTP API
+  version: "1.0"
+paths:
+  /healthz:
+    get:
+      description: Get health status of the service
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/infofx.HealthResponse'
+      summary: Get health status
+swagger: "2.0"

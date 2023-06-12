@@ -1,0 +1,5 @@
+sentry:
+  dsn: https://testing@tesing.testing.sentry.io/6538619
+  debug: true
+logs:
+  path: ./config
