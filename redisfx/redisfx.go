@@ -3,7 +3,7 @@ package redisfx
 import (
 	"context"
 
-	"github.com/go-redis/redis/v9"
+	"github.com/redis/go-redis/v9"
 	"github.com/spf13/viper"
 	"go.uber.org/fx"
 )
