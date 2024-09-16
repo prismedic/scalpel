@@ -121,7 +121,7 @@ func New(config *LoggerConfig) (*zap.SugaredLogger, error) {
 	// when writing to a file, the *os.File need to be locked with Lock() for concurrent access
 	core := zapcore.NewTee(
 		zapcore.NewCore(fileEncoder, fileWriter, fileLogLevel),
-		zapcore.NewCore(consoleEncoder, zapcore.Lock(os.Stdout), consoleLogLevel),
+		zapcore.NewCore(consoleEncoder, zapcore.Lock(os.Stderr), consoleLogLevel),
 	)
 
 	return zap.New(core, zap.AddCaller()).Sugar(), nil
