@@ -1,4 +1,4 @@
-package arsenal
+package scalpel
 
 import (
 	"go.uber.org/fx"
