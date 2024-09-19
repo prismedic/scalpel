@@ -4,7 +4,6 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"go.uber.org/fx"
 )
@@ -27,7 +26,7 @@ func init() {
 type HttpParams struct {
 	fx.In
 	Config  *HttpConfig
-	Handler *gin.Engine
+	Handler http.Handler
 }
 
 func NewHttp(p HttpParams) *http.Server {

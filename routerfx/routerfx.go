@@ -24,19 +24,19 @@ type Params struct {
 
 type Result struct {
 	fx.Out
-	Http *gin.Engine
+	Router http.Handler
 }
 
 func New(p Params) Result {
 	gin.SetMode(gin.ReleaseMode)
 
-	http := gin.New()
+	router := gin.New()
 	if p.Logger != nil {
-		http.Use(ginzap.Ginzap(p.Logger.Desugar(), time.RFC3339, true))
+		router.Use(ginzap.Ginzap(p.Logger.Desugar(), time.RFC3339, true))
 	}
-	http.Use(gin.Recovery())
+	router.Use(gin.Recovery())
 
-	apiRouterGroup := http.Group("/v1")
+	apiRouterGroup := router.Group("/v1")
 	for _, route := range p.ControllerRoutes {
 		if p.Logger != nil {
 			p.Logger.Infow("registering controller route", "pattern", route.RoutePattern())
@@ -50,16 +50,16 @@ func New(p Params) Result {
 		if p.Logger != nil {
 			p.Logger.Infow("registering handler route", "pattern", route.RoutePattern())
 		}
-		http.Any(route.RoutePattern(), gin.WrapH(route.HttpHandler()))
+		router.Any(route.RoutePattern(), gin.WrapH(route.HttpHandler()))
 	}
 
 	return Result{
-		Http: http,
+		Router: router,
 	}
 }
 
-func (r *Result) GetHttpRouter() *gin.Engine {
-	return r.Http
+func (r *Result) GetHttpRouter() http.Handler {
+	return r.Router
 }
 
 type ControllerRoute interface {
