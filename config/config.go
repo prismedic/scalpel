@@ -8,7 +8,7 @@ import (
 	"github.com/adrg/xdg"
 	"github.com/spf13/viper"
 
-	"github.com/prismedic/arsenal/logger"
+	"github.com/prismedic/scalpel/logger"
 )
 
 func InitConfig(cfgFile string) {

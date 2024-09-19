@@ -7,7 +7,7 @@ import (
 	"runtime"
 	"runtime/debug"
 
-	"github.com/prismedic/arsenal/config"
+	"github.com/prismedic/scalpel/config"
 )
 
 var (

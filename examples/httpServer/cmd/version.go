@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/prismedic/arsenal/infofx"
+	"github.com/prismedic/scalpel/infofx"
 	"github.com/spf13/cobra"
 )
 

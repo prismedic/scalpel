@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/go-playground/validator/v10 v10.14.1
-	github.com/prismedic/arsenal v0.0.0-00010101000000-000000000000
+	github.com/prismedic/scalpel v0.0.0-00010101000000-000000000000
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.16.0
 	github.com/swaggo/swag v1.8.12
@@ -82,4 +82,4 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
-replace github.com/prismedic/arsenal => ../../
+replace github.com/prismedic/scalpel => ../../

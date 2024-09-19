@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/prismedic/arsenal/config"
+	"github.com/prismedic/scalpel/config"
 	"github.com/spf13/cobra"
 
 	"examples/httpServer/internal/app"

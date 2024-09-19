@@ -1,4 +1,4 @@
-module github.com/prismedic/arsenal
+module github.com/prismedic/scalpel
 
 go 1.19
 

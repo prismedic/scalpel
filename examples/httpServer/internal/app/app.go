@@ -1,7 +1,7 @@
 package app
 
 import (
-	"github.com/prismedic/arsenal"
+	"github.com/prismedic/scalpel"
 	"go.uber.org/fx"
 
 	"examples/httpServer/internal/pkg/config"

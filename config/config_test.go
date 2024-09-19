@@ -6,7 +6,7 @@ import (
 
 	"github.com/spf13/viper"
 
-	"github.com/prismedic/arsenal/config"
+	"github.com/prismedic/scalpel/config"
 )
 
 func TestInitConfig(t *testing.T) {

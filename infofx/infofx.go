@@ -3,7 +3,7 @@ package infofx
 import (
 	"context"
 
-	"github.com/prismedic/arsenal/routerfx"
+	"github.com/prismedic/scalpel/routerfx"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 )

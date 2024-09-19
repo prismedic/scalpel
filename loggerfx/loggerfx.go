@@ -14,8 +14,8 @@ import (
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 
-	"github.com/prismedic/arsenal/config"
-	"github.com/prismedic/arsenal/logger"
+	"github.com/prismedic/scalpel/config"
+	"github.com/prismedic/scalpel/logger"
 )
 
 var Module = fx.Options(

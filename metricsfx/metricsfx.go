@@ -3,7 +3,7 @@ package metricsfx
 import (
 	"go.uber.org/fx"
 
-	"github.com/prismedic/arsenal/routerfx"
+	"github.com/prismedic/scalpel/routerfx"
 )
 
 var Module = fx.Module("metrics",

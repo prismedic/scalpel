@@ -5,9 +5,9 @@ import (
 	"os"
 
 	"github.com/go-playground/validator/v10"
-	"github.com/prismedic/arsenal/httpfx"
-	"github.com/prismedic/arsenal/loggerfx"
-	"github.com/prismedic/arsenal/sentryfx"
+	"github.com/prismedic/scalpel/httpfx"
+	"github.com/prismedic/scalpel/loggerfx"
+	"github.com/prismedic/scalpel/sentryfx"
 	"github.com/spf13/viper"
 	"go.uber.org/fx"
 	"gopkg.in/yaml.v3"
