@@ -62,19 +62,21 @@ func validateLogLevel(fieldLevel validator.FieldLevel) bool {
 }
 
 type LoggerConfig struct {
-	Path  string `mapstructure:"path" yaml:"path" validate:"required"`
-	Level struct {
-		File    LogLevel `mapstructure:"file" yaml:"file" validate:"required,loglevel"`
-		Console LogLevel `mapstructure:"console" yaml:"console" validate:"required,loglevel"`
-	} `mapstructure:"level" yaml:"level" validate:"required"`
+	File struct {
+		Level LogLevel `mapstructure:"level" yaml:"level" validate:"required,loglevel"`
+		Path  string   `mapstructure:"path" yaml:"path" validate:"required"`
+	} `mapstructure:"file" yaml:"file" validate:"required"`
+	Console struct {
+		Level LogLevel `mapstructure:"level" yaml:"level" validate:"required,loglevel"`
+	} `mapstructure:"console" yaml:"console" validate:"required"`
 }
 
 func init() {
 	// config must have a default value for viper to load config from env variables
 	// default value of empty string (zero value) will not pass the "required" config validation
-	viper.SetDefault("logs.path", path.Join("/var/log", config.GetPackageName()))
-	viper.SetDefault("logs.level.file", InfoLevel)
-	viper.SetDefault("logs.level.console", InfoLevel)
+	viper.SetDefault("logs.file.path", path.Join("/var/log", config.GetPackageName()))
+	viper.SetDefault("logs.file.level", InfoLevel)
+	viper.SetDefault("logs.console.level", InfoLevel)
 }
 
 func New(config *LoggerConfig) (*zap.SugaredLogger, error) {
@@ -86,12 +88,12 @@ func New(config *LoggerConfig) (*zap.SugaredLogger, error) {
 
 	// create a new writer for log rotation
 	fileWriter := zapcore.AddSync(&lumberjack.Logger{
-		Filename: path.Join(config.Path, "server.log"),
+		Filename: path.Join(config.File.Path, "server.log"),
 	})
 
 	// setting the log level for file/console log output
-	fileLogLevel := logLevelMap[config.Level.File]
-	consoleLogLevel := logLevelMap[config.Level.Console]
+	fileLogLevel := logLevelMap[config.File.Level]
+	consoleLogLevel := logLevelMap[config.Console.Level]
 
 	// setup the encoders
 	fileEncoderConfig := zap.NewProductionEncoderConfig()
