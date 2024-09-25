@@ -81,7 +81,7 @@ func init() {
 
 func New(config *LoggerConfig) (*zap.SugaredLogger, error) {
 	// create directory if needed
-	err := os.MkdirAll(config.Path, os.ModePerm)
+	err := os.MkdirAll(config.File.Path, os.ModePerm)
 	if err != nil {
 		return nil, fmt.Errorf("error in creating log file folder for writing: %w", err)
 	}
