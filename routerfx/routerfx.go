@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gin-contrib/cors"
 	ginzap "github.com/gin-contrib/zap"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/fx"
@@ -15,11 +16,17 @@ var Module = fx.Module("router",
 	fx.Provide(AsControllerRoute(NewSwaggerController)),
 )
 
+type Config struct {
+	CorsAllowedOrigins []string `mapstructure:"cors_allowed_origins" yaml:"cors_allowed_origins"`
+}
+
 type Params struct {
 	fx.In
+	Config           *Config
 	Logger           *zap.SugaredLogger `optional:"true"`
 	ControllerRoutes []ControllerRoute  `group:"controllerRoutes"`
 	HandlerRoutes    []HandlerRoute     `group:"handlerRoutes"`
+	Middlewares      []gin.HandlerFunc  `group:"middlewares"`
 }
 
 type Result struct {
@@ -35,6 +42,14 @@ func New(p Params) Result {
 		router.Use(ginzap.Ginzap(p.Logger.Desugar(), time.RFC3339, true))
 	}
 	router.Use(gin.Recovery())
+	corsConfig := cors.DefaultConfig()
+	corsConfig.AllowCredentials = true
+	corsConfig.AllowOrigins = p.Config.CorsAllowedOrigins
+	router.Use(cors.New(corsConfig))
+
+	for _, middleware := range p.Middlewares {
+		router.Use(middleware)
+	}
 
 	apiRouterGroup := router.Group("/v1")
 	for _, route := range p.ControllerRoutes {
@@ -50,7 +65,7 @@ func New(p Params) Result {
 		if p.Logger != nil {
 			p.Logger.Infow("registering handler route", "pattern", route.RoutePattern())
 		}
-		router.Any(route.RoutePattern(), gin.WrapH(route.HttpHandler()))
+		router.Any(route.RoutePattern(), route.Handler())
 	}
 
 	return Result{
@@ -76,7 +91,7 @@ func AsControllerRoute(controller any) any {
 }
 
 type HandlerRoute interface {
-	HttpHandler() http.Handler
+	Handler() gin.HandlerFunc
 	RoutePattern() string
 }
 
