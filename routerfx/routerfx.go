@@ -27,6 +27,7 @@ type Params struct {
 	ControllerRoutes []ControllerRoute  `group:"controllerRoutes"`
 	HandlerRoutes    []HandlerRoute     `group:"handlerRoutes"`
 	Middlewares      []gin.HandlerFunc  `group:"middlewares"`
+	NoRouteHandler   gin.HandlerFunc    `optional:"true" name:"noRouteHandler"`
 }
 
 type Result struct {
@@ -51,13 +52,12 @@ func New(p Params) Result {
 		router.Use(middleware)
 	}
 
-	apiRouterGroup := router.Group("/v1")
 	for _, route := range p.ControllerRoutes {
 		if p.Logger != nil {
 			p.Logger.Infow("registering controller route", "pattern", route.RoutePattern())
 		}
 		route.RegisterControllerRoutes(
-			apiRouterGroup.Group(route.RoutePattern()),
+			router.Group(route.RoutePattern()),
 		)
 	}
 
@@ -66,6 +66,13 @@ func New(p Params) Result {
 			p.Logger.Infow("registering handler route", "pattern", route.RoutePattern())
 		}
 		router.Any(route.RoutePattern(), route.Handler())
+	}
+
+	if p.NoRouteHandler != nil {
+		if p.Logger != nil {
+			p.Logger.Info("registering no route handler")
+		}
+		router.NoRoute(p.NoRouteHandler)
 	}
 
 	return Result{
