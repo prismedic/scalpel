@@ -46,7 +46,7 @@ func InitConfig(cfgFile string) {
 
 func GetPackageName() string {
 	buildInfo, ok := debug.ReadBuildInfo()
-	packageName := "arsenal"
+	packageName := "scalpel"
 	if ok {
 		packageName = path.Base(buildInfo.Path)
 	} else {
