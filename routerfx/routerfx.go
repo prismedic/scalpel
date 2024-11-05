@@ -13,7 +13,7 @@ import (
 
 var Module = fx.Module("router",
 	fx.Provide(New),
-	fx.Provide(AsControllerRoute(NewSwaggerController)),
+	fx.Provide(AsControllerRoute(NewScalarHandler)),
 )
 
 type Config struct {
